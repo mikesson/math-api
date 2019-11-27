@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: math-api-v1
+  version: '1.0'
+  description: showcase API with math functions
+servers:
+  - url: 'https://us-central1-apigee-quest-v2.cloudfunctions.net/api'
+paths:
+  /ping:
+    get:
+      summary: healthcheck endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pong'
+              examples:
+                example-success:
+                  value:
+                    response: pong
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      description: healthcheck endpoint
+  /factorial/{number}:
+    get:
+      summary: calculate factorial
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultFactorial'
+              examples:
+                example-1: {}
+      description: calculates the factorial of a number
+      parameters:
+      - name: number
+        in: path
+        required: true
+        schema:
+          type: integer
+  /prime/{number}:
+    get:
+      summary: get prime numbers
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/resultPrime'
+              examples: {}
+      parameters:
+      - name: number
+        in: path
+        required: true
+        schema:
+          type: integer
+components:
+  schemas:
+    pong:
+      title: pong
+      type: object
+      x-examples:
+        example-pong:
+          response: pong
+      properties:
+        response:
+          type: string
+    resultFactorial:
+      title: resultFactorial
+      type: object
+      x-examples:
+        example-success:
+          input: '10'
+          result: 3628800
+      properties:
+        input:
+          type: integer
+        result:
+          type: string
+    resultPrime:
+      title: resultPrime
+      type: object
+      x-examples:
+        example-success:
+          input: '10'
+          result:
+            - 2
+            - 3
+            - 5
+            - 7
+      properties:
+        input:
+          type: integer
+        result:
+          type: array
+          items: {}
